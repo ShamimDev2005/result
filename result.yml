@@ -1,0 +1,68 @@
+name: Check Education Result
+
+on:
+  workflow_dispatch:
+    inputs:
+      exam:
+        description: "Exam"
+        required: true
+        type: choice
+        options:
+          - jsc
+          - ssc
+          - hsc
+
+      year:
+        description: "Exam year (e.g. 2026)"
+        required: true
+        type: string
+
+      roll:
+        description: "Roll number (6 digits, optional)"
+        required: false
+        type: string
+
+      reg:
+        description: "Registration number (10 digits, optional)"
+        required: false
+        type: string
+
+      board:
+        description: "Board number"
+        required: true
+        type: choice
+        options:
+          - "1"
+          - "2"
+          - "3"
+          - "4"
+          - "5"
+          - "6"
+          - "7"
+          - "8"
+          - "9"
+          - "10"
+          - "11"
+          - "12"
+
+jobs:
+  result:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run result checker
+        env:
+          EXAM: ${{ inputs.exam }}
+          YEAR: ${{ inputs.year }}
+          ROLL: ${{ inputs.roll }}
+          REG: ${{ inputs.reg }}
+          BOARD: ${{ inputs.board }}
+        run: python result_action.py
