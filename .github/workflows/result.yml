@@ -1,26 +1,18 @@
-name: Check Education Result
+name: Run Bash API
 
 on:
   workflow_dispatch:
 
 jobs:
-  result:
+  api:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Run result checker
-        env:
-          EXAM: ${{ inputs.exam }}
-          YEAR: ${{ inputs.year }}
-          ROLL: ${{ inputs.roll }}
-          REG: ${{ inputs.reg }}
-          BOARD: ${{ inputs.board }}
-        run: python result_action.py
+      - name: Run Bash
+        shell: bash
+        run: |
+          chmod +x test.sh
+          ./test.sh
